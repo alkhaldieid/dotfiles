@@ -1,0 +1,37 @@
+#!/bin/sh
+# Idempotent, debounced Terminal launcher for AeroSpace Super+Return.
+# Prevents key-repeat from opening a burst of Terminal windows.
+set -eu
+
+lockdir="${TMPDIR:-/tmp}/dotfiles-open-terminal.lock"
+stamp="${TMPDIR:-/tmp}/dotfiles-open-terminal.stamp"
+
+if ! mkdir "$lockdir" 2>/dev/null; then
+  exit 0
+fi
+trap 'rmdir "$lockdir"' EXIT HUP INT TERM
+
+now="$(perl -MTime::HiRes=time -e 'printf "%.6f", time')"
+last="0"
+if [ -r "$stamp" ]; then
+  last="$(cat "$stamp" 2>/dev/null || printf '0')"
+fi
+
+threshold="1.0"
+if perl -e 'exit (($ARGV[0] - $ARGV[1]) < $ARGV[2] ? 0 : 1)' "$now" "$last" "$threshold"; then
+  # Keep extending the debounce window while the key repeats.
+  printf '%s\n' "$now" > "$stamp"
+  exit 0
+fi
+printf '%s\n' "$now" > "$stamp"
+
+osascript <<'APPLESCRIPT'
+if application "Terminal" is running then
+  tell application "Terminal"
+    if (count of windows) = 0 then do script ""
+    activate
+  end tell
+else
+  tell application "Terminal" to activate
+end if
+APPLESCRIPT
