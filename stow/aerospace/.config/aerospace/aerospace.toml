@@ -60,7 +60,7 @@ run = 'layout floating tiling'
 [mode.main.binding]
 
 # --- Terminal & dmenu (Super+Return / Super+d) ---
-ctrl-alt-cmd-enter      = 'exec-and-forget open -na Terminal'
+ctrl-alt-cmd-enter      = 'exec-and-forget open -a Terminal'
 ctrl-alt-cmd-d          = 'exec-and-forget open -a Raycast'
 
 # --- Window management (Super+q, Super+f, Super+space) ---
