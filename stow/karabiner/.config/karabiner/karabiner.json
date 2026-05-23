@@ -32,6 +32,30 @@
                 "type": "basic"
               }
             ]
+          },
+          {
+            "description": "Command+Return -> debounced Terminal launcher",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "return_or_enter",
+                  "modifiers": {
+                    "mandatory": [
+                      "command"
+                    ],
+                    "optional": [
+                      "any"
+                    ]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/bin/sh -lc \"$HOME/.config/aerospace/scripts/open-terminal\""
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
