@@ -1,0 +1,211 @@
+#+TITLE: Dotfiles — dwm Everywhere
+#+AUTHOR: Eid Alkhaldi
+#+OPTIONS: toc:2 num:nil
+#+STARTUP: showall
+
+* Overview
+
+Cross-platform dotfiles that bring the =dwm= keyboard workflow to both
+Linux (native =dwm=) and macOS (=AeroSpace= + =Karabiner= + =Hammerspoon=
++ =Raycast=).
+
+Same chords, same muscle memory, same workspaces — regardless of OS.
+
+** Philosophy
+
+- Keyboard-driven, mouse-optional.
+- =Super= (Caps Lock on macOS via Karabiner; =Mod4= on Linux) is the
+  single modifier prefix.
+- Emacs-first: =emacsclient= is =$EDITOR=, =org-mode= for agenda + capture
+  + roam.
+- Configuration is text, lives in git, syncs across machines.
+- Private overrides live in a separate submodule so the public repo
+  stays shareable.
+
+* Key Bindings
+
+All bindings use =Super= (Caps Lock tap = =Escape= on macOS).
+
+| Chord                  | Action                                  |
+|------------------------+-----------------------------------------|
+| =Super+Return=         | Terminal                                |
+| =Super+d=              | Launcher (dmenu / Raycast)              |
+| =Super+j= / =k=        | Focus next / previous window            |
+| =Super+Shift+j= / =k=  | Swap window with next / previous        |
+| =Super+h= / =l=        | Resize master area (smaller / larger)   |
+| =Super+1..9=           | Switch to workspace 1..9                |
+| =Super+Shift+1..9=     | Send window to workspace 1..9           |
+| =Super+g= / =;=        | Previous / next workspace               |
+| =Super+Tab=            | Last workspace                          |
+| =Super+f=              | Fullscreen                              |
+| =Super+Shift+Space=    | Toggle floating                         |
+| =Super+q=              | Close window                            |
+| =Super+'=              | Scratchpad terminal                     |
+| =Super+`=              | Unicode / emoji picker                  |
+| =Super+Backspace=      | System action menu (sysact)             |
+| =Super+w=              | Browser                                 |
+| =Super+e=              | Emacs                                   |
+| =Super+r=              | =dired= (file manager)                  |
+| =Super+n=              | =org-roam= node finder                  |
+| =Super+c=              | =org-capture=                           |
+| =Super+o=              | =org-agenda=                            |
+| =Super+-= / =+=        | Volume down / up                        |
+| =Super+Shift+m=        | Mute toggle                             |
+| =Fn= (tap)             | Switch input source (Arabic ↔ English)  |
+
+** Workspaces
+
+| # | Name      | Auto-assigned apps                  |
+|---+-----------+-------------------------------------|
+| 1 | work      | (manual)                            |
+| 2 | browsing  | Safari, Firefox, Chrome, Discord    |
+| 3 | email     | Mail, Thunderbird, Outlook          |
+| 4 | dev       | Emacs, VSCode, IntelliJ             |
+| 5 | stocks    | (manual)                            |
+| 6 | temp      | (manual)                            |
+| 7 | 7         | (manual)                            |
+| 8 | 8         | (manual)                            |
+| 9 | misc      | (manual)                            |
+
+* Installation
+
+** macOS
+
+#+begin_src zsh
+git clone --recurse-submodules https://github.com/alkhaldieid/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./bootstrap.sh
+#+end_src
+
+The bootstrap script will:
+
+1. Install Homebrew + dependencies from =Brewfile=.
+2. Apply macOS defaults (=scripts/macos-defaults.sh=).
+3. Stow all relevant config packages.
+4. Install the Emacs daemon =LaunchAgent=.
+5. Print a post-install checklist.
+
+*** Post-install manual steps
+
+These cannot be automated (Apple requires GUI consent):
+
+1. *System Settings → Privacy & Security → Accessibility* — enable
+   =AeroSpace=, =Karabiner-Elements=, =Hammerspoon=, =Raycast=.
+2. *System Settings → Privacy & Security → Input Monitoring* — enable
+   =karabiner_grabber= and =karabiner_observer=.
+3. Open =Karabiner-Elements= → *Complex Modifications* → *Add rule* —
+   enable:
+   - "Caps Lock → Ctrl+Opt+Cmd; tap → Escape"
+   - "Fn → Input Source Switch"
+4. Open =Raycast= → *Settings → General* — set hotkey to
+   =Ctrl+Opt+Cmd+D=.
+5. Open =Hammerspoon= → *Preferences* — enable "Launch at login" and
+   install the command-line tool.
+
+** Linux (Arch)
+
+#+begin_src bash
+git clone --recurse-submodules https://github.com/alkhaldieid/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./bootstrap.sh
+#+end_src
+
+The script will:
+
+1. =pacman -S --needed - < arch-packages.txt=
+2. Build =dwm= and =dwmblocks= from =stow/dwm/= and =stow/dwmblocks/=.
+3. Stow all configs.
+4. Enable the user-level =emacs.service= via =systemctl --user=.
+
+** Private submodule
+
+Machine-specific or sensitive configs live in =./private/=, which is
+a separate private repository (=dotfiles-private=).
+
+#+begin_src zsh
+git submodule update --init --recursive
+#+end_src
+
+Set up SSH access to the private repo first, or the submodule init
+will fail.
+
+* Repository Layout
+
+#+begin_example
+dotfiles/
+├── README.org
+├── bootstrap.sh
+├── Brewfile
+├── arch-packages.txt
+├── stow/
+│   ├── aerospace/
+│   ├── karabiner/
+│   ├── hammerspoon/
+│   ├── raycast-scripts/
+│   ├── emacs/
+│   ├── zsh/
+│   ├── dwm/                  # Linux only
+│   └── dwmblocks/            # Linux only
+├── launchd/
+│   └── gnu.emacs.daemon.plist
+├── systemd/
+│   └── emacs.service
+├── scripts/
+│   ├── macos-defaults.sh
+│   ├── linux-setup.sh
+│   └── common-env.sh
+└── private/                  # git submodule
+#+end_example
+
+* Stack
+
+| Tool          | macOS        | Linux        | Purpose                  |
+|---------------+--------------+--------------+--------------------------|
+| WM            | AeroSpace    | dwm          | Tiling window manager    |
+| Key remapper  | Karabiner    | (kernel)     | Caps Lock → Super        |
+| Scratchpad    | Hammerspoon  | tdrop + st   | Drop-down terminal       |
+| Launcher      | Raycast      | dmenu        | App + script launcher    |
+| Editor        | Emacs daemon | Emacs daemon | Everything else          |
+| Shell         | zsh          | zsh          | Interactive shell        |
+| Status bar    | sketchybar   | dwmblocks    | Top bar                  |
+
+* Customization
+
+** Per-machine overrides
+
+Put machine-specific tweaks in =./private/machine-overrides/<hostname>/=
+and source them from =stow/zsh/.zshrc.local=.
+
+** Adding a keybinding
+
+1. Add to =stow/aerospace/.config/aerospace/aerospace.toml= (macOS).
+2. Add equivalent to =stow/dwm/.local/src/dwm/config.h= (Linux).
+3. =aerospace reload-config= or rebuild dwm.
+
+* Troubleshooting
+
+** macOS: nothing happens when I press Super+key
+
+#+begin_src zsh
+pgrep -lf AeroSpace
+pgrep -lf karabiner
+aerospace reload-config 2>&1
+open -a "Karabiner-EventViewer"
+#+end_src
+
+Hold Caps Lock + tap a key. You should see
+=left_control left_option left_command <key>=. If you only see
+=caps_lock=, the Karabiner rule isn't enabled.
+
+** Config won't reload
+
+Check for duplicate bindings:
+
+#+begin_src zsh
+grep -n '^ctrl-alt-cmd-' ~/.config/aerospace/aerospace.toml | \
+  awk -F= '{print $1}' | sort | uniq -d
+#+end_src
+
+* License
+
+MIT for configs. dwm patches retain upstream MIT/X11 licenses.

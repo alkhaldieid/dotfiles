@@ -1,0 +1,16 @@
+{
+  "title": "dwm Super (Caps Lock)",
+  "rules": [
+    {
+      "description": "Caps Lock → Ctrl+Opt+Cmd (Super); tap → Escape",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": { "key_code": "caps_lock", "modifiers": { "optional": ["any"] } },
+          "to": [{ "key_code": "left_command", "modifiers": ["left_control", "left_option"] }],
+          "to_if_alone": [{ "key_code": "escape" }]
+        }
+      ]
+    }
+  ]
+}

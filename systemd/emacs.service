@@ -1,0 +1,13 @@
+# Scaffold: Linux user unit for the canonical Emacs daemon.
+[Unit]
+Description=Emacs text editor daemon
+Documentation=info:emacs man:emacs(1)
+
+[Service]
+Type=forking
+ExecStart=emacs --daemon
+ExecStop=emacsclient -e "(kill-emacs)"
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

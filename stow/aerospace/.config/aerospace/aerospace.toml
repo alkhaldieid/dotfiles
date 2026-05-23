@@ -1,0 +1,194 @@
+# ============================================================
+# AeroSpace config — dwm-style for macOS
+# Super = Caps Lock (via Karabiner) = ctrl+alt+cmd
+# Shift = real Shift  ->  represents dwm's MODKEY|ShiftMask
+# ============================================================
+
+after-login-command = []
+after-startup-command = []
+start-at-login = true
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# --- Gaps (matches your gappih=20 gappiv=10 gappoh=10 gappov=30) ---
+[gaps]
+inner.horizontal = 20
+inner.vertical   = 10
+outer.left       = 10
+outer.right      = 10
+outer.top        = 30
+outer.bottom     = 10
+
+# ============================================================
+# Workspaces (tags)
+# 1=work  2=browsing  3=email  4=dev  5=stocks
+# 6=temp  7=7  8=8  9=misc
+# ============================================================
+[workspace-to-monitor-force-assignment]
+# Use defaults; override per-machine if needed
+
+# ============================================================
+# Window rules (replaces dwm's Rule[] block)
+# ============================================================
+[[on-window-detected]]
+if.app-name-regex-substring = 'Safari|Firefox|Chrome|Brave|Arc|Vivaldi'
+run = 'move-node-to-workspace browsing'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Mail|Thunderbird|Outlook'
+run = 'move-node-to-workspace email'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Discord|Slack|Telegram'
+run = 'move-node-to-workspace browsing'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Emacs|Code|VSCode|PyCharm|IntelliJ|Xcode'
+run = 'move-node-to-workspace dev'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Preview|Calculator|System Settings|Activity Monitor|Karabiner'
+run = 'layout floating tiling'
+
+# ============================================================
+# Main keybindings
+# ============================================================
+[mode.main.binding]
+
+# --- Terminal & dmenu (Super+Return / Super+d) ---
+ctrl-alt-cmd-enter      = 'exec-and-forget open -na Terminal'
+ctrl-alt-cmd-d          = 'exec-and-forget open -a Raycast'
+
+# --- Window management (Super+q, Super+f, Super+space) ---
+ctrl-alt-cmd-q          = 'close'
+ctrl-alt-cmd-shift-q    = 'mode sysact'                       # sysact menu
+ctrl-alt-cmd-f          = 'fullscreen'
+ctrl-alt-cmd-shift-f    = 'layout floating tiling'             # toggle floating layout
+ctrl-alt-cmd-space      = 'macos-native-minimize'              # closest to zoom; better: see Hammerspoon
+ctrl-alt-cmd-shift-space = 'layout floating tiling'            # togglefloating
+
+# --- Focus stack (Super+j/k = focus, Super+Shift+j/k = swap) ---
+ctrl-alt-cmd-j          = 'focus --boundaries-action wrap-around-the-workspace down'
+ctrl-alt-cmd-k          = 'focus --boundaries-action wrap-around-the-workspace up'
+ctrl-alt-cmd-shift-j    = 'move down'
+ctrl-alt-cmd-shift-k    = 'move up'
+
+# --- Master area resize (Super+h/l = mfact -/+ ) ---
+# NOTE: laptop config also used h/l for focusmon. We bind h/l to mfact (desktop behavior)
+# and use Super+, / Super+. for monitor focus instead (see below).
+ctrl-alt-cmd-h          = 'resize smart -50'
+ctrl-alt-cmd-l          = 'resize smart +50'
+ctrl-alt-cmd-shift-i    = 'balance-sizes'                      # rebalance
+
+# --- Layouts (Super+t/y/u/i, Shift variants) ---
+ctrl-alt-cmd-t          = 'layout tiles horizontal vertical'   # tile
+ctrl-alt-cmd-shift-t    = 'layout v_tiles h_tiles'             # bstack-ish
+ctrl-alt-cmd-y          = 'layout accordion horizontal'        # spiral approx
+ctrl-alt-cmd-shift-y    = 'layout accordion vertical'          # dwindle approx
+ctrl-alt-cmd-u          = 'layout tiles horizontal'            # deck approx
+ctrl-alt-cmd-shift-u    = 'layout accordion'                   # monocle approx
+ctrl-alt-cmd-i          = 'layout tiles'                       # centeredmaster approx
+
+# --- Tag switching (Super+1..9) ---
+ctrl-alt-cmd-1          = 'workspace 1'
+ctrl-alt-cmd-2          = 'workspace 2'
+ctrl-alt-cmd-3          = 'workspace 3'
+ctrl-alt-cmd-4          = 'workspace 4'
+ctrl-alt-cmd-5          = 'workspace 5'
+ctrl-alt-cmd-6          = 'workspace 6'
+ctrl-alt-cmd-7          = 'workspace 7'
+ctrl-alt-cmd-8          = 'workspace 8'
+ctrl-alt-cmd-9          = 'workspace 9'
+
+# --- Send to tag (Super+Shift+1..9) ---
+ctrl-alt-cmd-shift-1    = ['move-node-to-workspace 1', 'workspace 1']
+ctrl-alt-cmd-shift-2    = ['move-node-to-workspace 2', 'workspace 2']
+ctrl-alt-cmd-shift-3    = ['move-node-to-workspace 3', 'workspace 3']
+ctrl-alt-cmd-shift-4    = ['move-node-to-workspace 4', 'workspace 4']
+ctrl-alt-cmd-shift-5    = ['move-node-to-workspace 5', 'workspace 5']
+ctrl-alt-cmd-shift-6    = ['move-node-to-workspace 6', 'workspace 6']
+ctrl-alt-cmd-shift-7    = ['move-node-to-workspace 7', 'workspace 7']
+ctrl-alt-cmd-shift-8    = ['move-node-to-workspace 8', 'workspace 8']
+ctrl-alt-cmd-shift-9    = ['move-node-to-workspace 9', 'workspace 9']
+
+# --- Tag cycle (Super+g / Super+;  = shiftview) ---
+ctrl-alt-cmd-g              = 'workspace --wrap-around prev'
+ctrl-alt-cmd-semicolon      = 'workspace --wrap-around next'
+ctrl-alt-cmd-shift-g        = ['move-node-to-workspace --wrap-around prev', 'workspace --wrap-around prev']
+ctrl-alt-cmd-shift-semicolon = ['move-node-to-workspace --wrap-around next', 'workspace --wrap-around next']
+
+# --- Tab = last workspace (Super+Tab) ---
+ctrl-alt-cmd-tab        = 'workspace-back-and-forth'
+
+# --- Monitor focus (was Super+Left/Right OR Super+h/l on laptop) ---
+# Unified: arrow keys for monitors, h/l free for mfact
+ctrl-alt-cmd-left       = 'focus-monitor --wrap-around prev'
+ctrl-alt-cmd-right      = 'focus-monitor --wrap-around next'
+ctrl-alt-cmd-shift-left = 'move-node-to-monitor --wrap-around prev'
+ctrl-alt-cmd-shift-right = 'move-node-to-monitor --wrap-around next'
+
+# --- Gaps toggle (Super+a / Super+z / Super+x) ---
+# AeroSpace has no runtime gaps mutation; bind to no-op or reload alt configs
+ctrl-alt-cmd-a          = 'reload-config'                      # was togglegaps
+
+# --- App launchers (Super+w/e/r/n/c/o) ---
+ctrl-alt-cmd-w          = 'exec-and-forget open -a Safari'              # browser
+ctrl-alt-cmd-shift-w    = 'exec-and-forget open -a "System Settings"'   # was nmtui
+ctrl-alt-cmd-e          = 'exec-and-forget open -na Emacs'              # emacs / neomutt
+ctrl-alt-cmd-r          = 'exec-and-forget open -na Terminal --args lf' # file manager
+ctrl-alt-cmd-shift-r    = 'exec-and-forget open -na Terminal --args htop'
+ctrl-alt-cmd-n          = 'exec-and-forget open -na Terminal --args nvim -c VimwikiIndex'
+ctrl-alt-cmd-shift-n    = 'exec-and-forget open -na Terminal --args newsboat'
+ctrl-alt-cmd-c          = 'exec-and-forget emacsclient -nc -a="" --eval "(org-capture)"'
+ctrl-alt-cmd-o          = 'exec-and-forget emacsclient -nc -a="" --eval "(org-agenda)"'
+
+# --- Volume (Super+- / Super+= ; Shift = larger step) ---
+ctrl-alt-cmd-minus      = 'exec-and-forget osascript -e "set volume output volume (output volume of (get volume settings) - 5)"'
+ctrl-alt-cmd-shift-minus = 'exec-and-forget osascript -e "set volume output volume (output volume of (get volume settings) - 15)"'
+ctrl-alt-cmd-equal      = 'exec-and-forget osascript -e "set volume output volume (output volume of (get volume settings) + 5)"'
+ctrl-alt-cmd-shift-equal = 'exec-and-forget osascript -e "set volume output volume (output volume of (get volume settings) + 15)"'
+ctrl-alt-cmd-shift-m    = 'exec-and-forget osascript -e "set volume with output muted"'
+
+# --- Media (Super+p / Super+, / Super+. / Super+[ / Super+]) ---
+ctrl-alt-cmd-p          = 'exec-and-forget osascript -e "tell application \"Music\" to playpause"'
+ctrl-alt-cmd-comma      = 'exec-and-forget osascript -e "tell application \"Music\" to previous track"'
+ctrl-alt-cmd-period     = 'exec-and-forget osascript -e "tell application \"Music\" to next track"'
+
+# --- Sysact (Super+Backspace, Super+Shift+q) ---
+ctrl-alt-cmd-backspace  = 'mode sysact'
+
+# --- Scratchpad (Super+' = spterm) ---
+ctrl-alt-cmd-quote      = 'exec-and-forget hs -c "toggleScratchpad()"'
+ctrl-alt-cmd-shift-enter = 'exec-and-forget hs -c "toggleScratchpad()"'
+
+# --- Unicode picker (Super+`) ---
+ctrl-alt-cmd-backtick      = 'exec-and-forget open "raycast://extensions/raycast/emoji-symbols/search-emoji-symbols"'
+
+# --- F-keys (preserve dwm F1-F12 semantics where possible) ---
+ctrl-alt-cmd-f1         = 'exec-and-forget open -a "Help Viewer"'                              # was larbs man
+ctrl-alt-cmd-f3         = 'exec-and-forget open -a "Displays"'                                 # displayselect
+ctrl-alt-cmd-f4         = 'exec-and-forget open -na Terminal --args alsamixer'                 # pulsemixer
+ctrl-alt-cmd-f5         = 'exec-and-forget emacsclient -nc -a="" --eval "(make-capture-frame)"'
+
+# --- Snippets (Super+Insert) — replaced by Raycast snippets ---
+# Bind in Raycast: Search Snippets → Caps+Insert
+
+# --- Screenshots ---
+
+# --- Reload config ---
+
+# ============================================================
+# Sysact submenu (Super+Backspace then key)
+# q=quit  l=lock  s=sleep  r=restart  p=poweroff  Escape=cancel
+# ============================================================
+[mode.sysact.binding]
+q     = ['exec-and-forget osascript -e "tell application \"System Events\" to log out"', 'mode main']
+l     = ['exec-and-forget pmset displaysleepnow', 'mode main']
+s     = ['exec-and-forget pmset sleepnow', 'mode main']
+r     = ['exec-and-forget osascript -e "tell app \"System Events\" to restart"', 'mode main']
+p     = ['exec-and-forget osascript -e "tell app \"System Events\" to shut down"', 'mode main']
+esc   = 'mode main'
