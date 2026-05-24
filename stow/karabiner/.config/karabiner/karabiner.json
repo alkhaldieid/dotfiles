@@ -34,7 +34,7 @@
             ]
           },
           {
-            "description": "Command+Return -> debounced Terminal launcher",
+            "description": "Plain Command+Return -> debounced Terminal launcher",
             "manipulators": [
               {
                 "type": "basic",
@@ -43,9 +43,6 @@
                   "modifiers": {
                     "mandatory": [
                       "command"
-                    ],
-                    "optional": [
-                      "any"
                     ]
                   }
                 },
