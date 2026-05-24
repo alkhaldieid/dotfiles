@@ -32,6 +32,24 @@ alias mv='mv -i'
 alias rm='rm -i'
 
 
+
+# Navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -'
+alias c='clear'
+alias path='print -l $path'
+
+# Modern CLI fallbacks
+alias tree='eza --tree --icons=never 2>/dev/null || command tree'
+alias du='du -h'
+alias df='df -h'
+
+# Zsh
+alias zr='source ${ZDOTDIR:-${HOME}/.config/zsh}/.zshrc'
+alias ze='${EDITOR:-emacsclient -t -a emacs} ${ZDOTDIR:-${HOME}/.config/zsh}/.zshrc'
+
 # Tmux
 alias ta='tmux new-session -A -s main'
 alias tl='tmux list-sessions'
