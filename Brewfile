@@ -18,6 +18,7 @@ brew "ripgrep"
 brew "stow"
 brew "tree"
 brew "zsh"
+brew "tmux"
 
 cask "nikitabobko/tap/aerospace"
 cask "emacs-app"

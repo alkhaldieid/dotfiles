@@ -11,3 +11,10 @@ killall Dock >/dev/null 2>&1 || true
 # Karabiner/AeroSpace without repeat-spawning Terminal windows.
 defaults write com.apple.Terminal NSUserKeyEquivalents -dict-add "New Window with Same Command" '@^~$\UF71E'
 defaults write com.apple.Terminal NSUserKeyEquivalents -dict-add "New Tab with Same Command" '@^~$\UF71D'
+
+
+# Dark, high-contrast Terminal.app profile. Uses the built-in Pro profile so this
+# remains portable across fresh macOS installs.
+defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
+defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
+defaults write com.apple.Terminal SecureKeyboardEntry -bool true

@@ -30,3 +30,9 @@ alias dotedit='emacsclient -c -a emacs ${HOME}/dotfiles'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
+
+
+# Tmux
+alias ta='tmux new-session -A -s main'
+alias tl='tmux list-sessions'
+alias tk='tmux kill-session -t main'

@@ -16,4 +16,7 @@ ncmpcpp
 ripgrep
 st
 stow
+tmux
+wl-clipboard
+xclip
 zsh

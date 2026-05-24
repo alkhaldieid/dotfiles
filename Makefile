@@ -1,7 +1,7 @@
 STOW_DIR := stow
 TARGET := $(HOME)
-MACOS_PACKAGES := aerospace karabiner hammerspoon raycast-scripts zsh
-LINUX_PACKAGES := zsh dwm dwmblocks
+MACOS_PACKAGES := aerospace bin karabiner hammerspoon raycast-scripts tmux zsh
+LINUX_PACKAGES := bin tmux zsh dwm dwmblocks
 ALL_PACKAGES := $(shell find $(STOW_DIR) -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
 
 .PHONY: install-macos install-linux stow unstow zsh-bench sanity
