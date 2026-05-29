@@ -35,10 +35,6 @@ outer.bottom     = 10
 # Window rules (replaces dwm's Rule[] block)
 # ============================================================
 [[on-window-detected]]
-if.app-name-regex-substring = 'Safari|Firefox|Chrome|Brave|Arc|Vivaldi'
-run = 'move-node-to-workspace browsing'
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'Mail|Thunderbird|Outlook'
 run = 'move-node-to-workspace email'
 

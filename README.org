@@ -58,7 +58,7 @@ All bindings use =Super= (Caps Lock tap = =Escape= on macOS).
 | # | Name      | Auto-assigned apps                  |
 |---+-----------+-------------------------------------|
 | 1 | work      | (manual)                            |
-| 2 | browsing  | Safari, Firefox, Chrome, Discord    |
+| 2 | browsing  | Manual browser placement; Discord   |
 | 3 | email     | Mail, Thunderbird, Outlook          |
 | 4 | dev       | Emacs, VSCode, IntelliJ             |
 | 5 | stocks    | (manual)                            |
