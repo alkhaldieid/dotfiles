@@ -43,10 +43,6 @@ if.app-name-regex-substring = 'Discord|Slack|Telegram'
 run = 'move-node-to-workspace browsing'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'Emacs|Code|VSCode|PyCharm|IntelliJ|Xcode'
-run = 'move-node-to-workspace dev'
-
-[[on-window-detected]]
 if.app-name-regex-substring = 'Preview|Calculator|System Settings|Activity Monitor|Karabiner'
 run = 'layout floating tiling'
 

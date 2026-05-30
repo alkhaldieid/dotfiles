@@ -60,7 +60,7 @@ All bindings use =Super= (Caps Lock tap = =Escape= on macOS).
 | 1 | work      | (manual)                            |
 | 2 | browsing  | Manual browser placement; Discord   |
 | 3 | email     | Mail, Thunderbird, Outlook          |
-| 4 | dev       | Emacs, VSCode, IntelliJ             |
+| 4 | dev       | Manual dev-tool placement           |
 | 5 | stocks    | (manual)                            |
 | 6 | temp      | (manual)                            |
 | 7 | 7         | (manual)                            |
